@@ -92,7 +92,9 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="VideoPicker.cs" />
     <Compile Include="VideoPlayerRenderer.cs" />
-    <None Include="Entitlements.plist" />
+    <None Include="Entitlements.plist">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />

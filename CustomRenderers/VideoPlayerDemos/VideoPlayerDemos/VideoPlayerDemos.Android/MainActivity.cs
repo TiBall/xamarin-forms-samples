@@ -38,11 +38,8 @@ namespace VideoPlayerDemos.Droid
             {
                 if ((resultCode == Result.Ok) && (data != null))
                 {
-                    Android.Net.Uri uri = data.Data;
-                    string filename =  "";                          // TODO: Need filename !!!      //  Stream stream = ContentResolver.OpenInputStream(uri);
-
-                    // Set the Stream as the completion of the Task
-                    PickImageTaskCompletionSource.SetResult(filename);
+                    // Set the filename as the completion of the Task
+                    PickImageTaskCompletionSource.SetResult(data.DataString);
                 }
                 else
                 {

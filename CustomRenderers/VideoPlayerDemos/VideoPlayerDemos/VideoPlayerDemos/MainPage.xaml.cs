@@ -42,6 +42,13 @@ namespace VideoPlayerDemos
             string filename = await DependencyService.Get<IVideoPicker>().GetVideoFileAsync();
 
             System.Diagnostics.Debug.WriteLine(filename);
+
+            FileVideoSource fileVideoSource = new FileVideoSource
+            {
+                File = filename
+            };
+
+            videoPlayer.Source = fileVideoSource;
         }
     }
 }

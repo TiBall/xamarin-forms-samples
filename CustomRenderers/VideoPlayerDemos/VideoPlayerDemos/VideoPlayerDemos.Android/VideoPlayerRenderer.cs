@@ -119,25 +119,27 @@ namespace MediaHelpers.Droid
 
         void SetSource()
         {
-            Android.Net.Uri uri = null;
+            bool hasSetSource = false;
 
             if (Element.Source != null)
             {
                 if (Element.Source is UriVideoSource)
                 {
                     string uriString = (Element.Source as UriVideoSource).Uri;
-                    uri = Android.Net.Uri.Parse(uriString);
+                    Android.Net.Uri uri = Android.Net.Uri.Parse(uriString);
+                    Control.SetVideoURI(uri);
+                    hasSetSource = true;
                 }
-                else
+                else if (Element.Source is FileVideoSource)
                 {
-                    // TODO for file sources
+                    string filename = (Element.Source as FileVideoSource).File;
+                    Control.SetVideoPath(filename);
+                    hasSetSource = true;
                 }
             }
 
-            Control.SetVideoURI(uri);
-
-            // TODO: Is there an AutoPlay property?
-            if (uri != null && Element.AutoPlay)
+            // TODO: Is there an AutoPlay property to use instead of this logic?
+            if (hasSetSource && Element.AutoPlay)
             {
                 Control.Start();
             }

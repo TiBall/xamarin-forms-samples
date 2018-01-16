@@ -29,7 +29,7 @@ namespace MediaHelpers.Droid
 
             // Start the picture-picker activity (resumes in MainActivity.cs)
             activity.StartActivityForResult(
-                Intent.CreateChooser(intent, "Select Picture"),
+                Intent.CreateChooser(intent, "Select Video"),
                 MainActivity.PickImageId);
 
             // Save the TaskCompletionSource object as a MainActivity property

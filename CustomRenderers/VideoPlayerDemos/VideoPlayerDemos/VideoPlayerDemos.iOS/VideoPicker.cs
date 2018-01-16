@@ -23,8 +23,8 @@ namespace MediaHelpers.iOS
             // Create and define UIImagePickerController
             imagePicker = new UIImagePickerController
             {
-                SourceType = UIImagePickerControllerSourceType.PhotoLibrary,
-                MediaTypes = UIImagePickerController.AvailableMediaTypes(UIImagePickerControllerSourceType.PhotoLibrary)
+                SourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum,
+                MediaTypes = new string[] { "public.movie" }
             };
 
             // Set event handlers
@@ -43,16 +43,9 @@ namespace MediaHelpers.iOS
 
         void OnImagePickerFinishedPickingMedia(object sender, UIImagePickerMediaPickedEventArgs args)
         {
-            UIImage image = args.EditedImage ?? args.OriginalImage;                 // Need videos
-
-            if (image != null)
+            if (args.MediaType == "public.movie")
             {
-                // Convert UIImage to .NET Stream object                            // NO, DO NOT
-                NSData data = image.AsJPEG(1);
-                Stream stream = data.AsStream();
-
-                // Set the Stream as the completion of the Task
-                taskCompletionSource.SetResult("");                                 // TODO!!!
+                taskCompletionSource.SetResult(args.MediaUrl.AbsoluteString);
             }
             else
             {
