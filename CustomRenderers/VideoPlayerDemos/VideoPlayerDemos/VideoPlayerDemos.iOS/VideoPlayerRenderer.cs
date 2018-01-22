@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.IO;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -88,28 +86,41 @@ namespace MediaHelpers.iOS
 
                 if (Element.Source is UriVideoSource)
                 {
-                    string uriString = (Element.Source as UriVideoSource).Uri;
-                    asset = AVAsset.FromUrl(new NSUrl(uriString));
+                    string uri = (Element.Source as UriVideoSource).Uri;
+                    asset = AVAsset.FromUrl(new NSUrl(uri));
                 }
-                else
+                else if (Element.Source is FileVideoSource)
                 {
-                    // TODO for file sources
+                    string uri = (Element.Source as FileVideoSource).File;
+                    asset = AVAsset.FromUrl(new NSUrl(uri));
                 }
+                else if (Element.Source is ResourceVideoSource)
+                {
+                    string path = (Element.Source as ResourceVideoSource).Path;
+                    string directory = Path.GetDirectoryName(path);
+                    string filename = Path.GetFileNameWithoutExtension(path);
+                    string extension = Path.GetExtension(path).Substring(1);
+                    NSUrl url = NSBundle.MainBundle.GetUrlForResource(filename, extension, directory);
+                    asset = AVAsset.FromUrl(url);
+                }
+
 
                 if (asset != null)
                 {
                     playerItem = new AVPlayerItem(asset);
 
-                    ((IVideoPlayerController)Element).Duration = TimeSpan.FromMilliseconds(playerItem.Duration.Value);
+                    ((IVideoPlayerController)Element).Duration = ConvertTime(playerItem.Duration); 
 
                     observer = playerItem.AddObserver("duration", NSKeyValueObservingOptions.Initial, 
                         
 
                         (sender) =>
-                                        {
-                                            ((IVideoPlayerController)Element).Duration = TimeSpan.FromMilliseconds(playerItem.Duration.Value);
-                                            System.Diagnostics.Debug.WriteLine(TimeSpan.FromMilliseconds(playerItem.Duration.Value));
-                                        });
+                                       // {
+                                            ((IVideoPlayerController)Element).Duration = ConvertTime(playerItem.Duration) // ; //  TimeSpan.FromSeconds(playerItem.Duration.Seconds);
+//                                        System.Diagnostics.Debug.WriteLine(playerItem.Duration.Seconds); //      TimeSpan.FromMilliseconds(playerItem.Duration.Value));
+                //                        }
+                
+                );
 /*
                     timeObserver = playerItem.AddObserver("currenttime", NSKeyValueObservingOptions.New,
                         (sender) =>
@@ -131,6 +142,12 @@ namespace MediaHelpers.iOS
             }
         }
 
+        TimeSpan ConvertTime(CMTime cmTime)
+        {
+            return TimeSpan.FromSeconds(Double.IsNaN(cmTime.Seconds) ? 0 : cmTime.Seconds);
+
+        }
+
         private IDisposable observer;
     //    private IDisposable timeObserver;
 /*
@@ -147,8 +164,10 @@ namespace MediaHelpers.iOS
         // Event handler to update status
         void OnUpdateStatus(object sender, EventArgs args)
         {
-            ((IElementController)Element).SetValueFromRenderer(VideoPlayer.PositionProperty,
-                TimeSpan.FromSeconds(((AVPlayerViewController)ViewController).Player.CurrentTime.Seconds));
+            CMTime cmTime = ((AVPlayerViewController)ViewController).Player.CurrentTime;
+            //     seconds = Double.IsNaN(seconds) ? 0 : seconds;
+
+            ((IElementController)Element).SetValueFromRenderer(VideoPlayer.PositionProperty, ConvertTime(cmTime)); //  TimeSpan.FromSeconds(seconds));
         }
 
         // Event handlers to implement methods

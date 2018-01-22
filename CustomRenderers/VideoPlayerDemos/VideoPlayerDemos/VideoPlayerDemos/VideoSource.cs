@@ -7,11 +7,29 @@ using Xamarin.Forms;
 
 namespace MediaHelpers
 {
-    public class VideoSource : Element
+    public abstract class VideoSource : Element
     {
-        public static VideoSource FromUri(string uri)
+    }
+
+
+
+
+
+    public class ResourceVideoSource : VideoSource
+    {
+        public static readonly BindableProperty PathProperty =
+            BindableProperty.Create("Path", typeof(string), typeof(ResourceVideoSource));
+
+        public string Path
         {
-            return new UriVideoSource { Uri = uri };
+            set { SetValue(PathProperty, value); }
+            get { return (string)GetValue(PathProperty); }
         }
     }
+
+
+
+
+
+
 }

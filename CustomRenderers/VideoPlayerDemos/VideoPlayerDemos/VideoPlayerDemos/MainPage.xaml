@@ -22,11 +22,30 @@
 
         <media:VideoPlayer x:Name="videoPlayer"
                            Grid.Row="0"                 BackgroundColor="Aqua"
-                           AutoPlay="False" 
+                           AutoPlay="True" 
                            AreTransportControlsEnabled="False">
-            <media:VideoPlayer.Source>
+            <!--<media:VideoPlayer.Source>
                 <media:UriVideoSource Uri="{x:Static local:MainPage.ElephantsDream}" />
+            </media:VideoPlayer.Source>-->
+
+            <media:VideoPlayer.Source>
+                <media:ResourceVideoSource Path="Videos/VideoInFolder.mp4" />
+                <!--<media:ResourceVideoSource Path="iosvideo.mp4" />-->
             </media:VideoPlayer.Source>
+
+
+
+            <!--<media:VideoPlayer.Source>
+                <media:ResourceVideoSource Path="androidvideo" />
+            </media:VideoPlayer.Source>-->
+
+
+            <!--<media:VideoPlayer.Source>
+                <media:ResourceVideoSource Path="Videos/WinVideo.mp4" />
+            </media:VideoPlayer.Source>-->
+
+
+
         </media:VideoPlayer>
 
         <StackLayout Grid.Row="1"

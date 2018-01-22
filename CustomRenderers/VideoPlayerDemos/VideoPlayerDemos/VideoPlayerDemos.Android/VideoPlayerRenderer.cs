@@ -125,9 +125,8 @@ namespace MediaHelpers.Droid
             {
                 if (Element.Source is UriVideoSource)
                 {
-                    string uriString = (Element.Source as UriVideoSource).Uri;
-                    Android.Net.Uri uri = Android.Net.Uri.Parse(uriString);
-                    Control.SetVideoURI(uri);
+                    string uri = (Element.Source as UriVideoSource).Uri;
+                    Control.SetVideoURI(Android.Net.Uri.Parse(uri));
                     hasSetSource = true;
                 }
                 else if (Element.Source is FileVideoSource)
@@ -136,6 +135,16 @@ namespace MediaHelpers.Droid
                     Control.SetVideoPath(filename);
                     hasSetSource = true;
                 }
+                else if (Element.Source is ResourceVideoSource)
+                {
+                    string package = Context.PackageName;
+                    string path = (Element.Source as ResourceVideoSource).Path;
+                    string uri = "android.resource://" + package + "/raw/" + path;
+                    Control.SetVideoURI(Android.Net.Uri.Parse(uri));
+                    hasSetSource = true;
+                }
+
+                
             }
 
             // TODO: Is there an AutoPlay property to use instead of this logic?

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Core;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
@@ -94,24 +96,29 @@ namespace MediaHelpers.UWP
             }
         }
 
-        void SetSource()
+        async void SetSource()
         {
-            Uri uri = null;
-
             if (Element.Source != null)
             {
                 if (Element.Source is UriVideoSource)
                 {
                     string uriString = (Element.Source as UriVideoSource).Uri;
-                    uri = new Uri(uriString);
+                    Control.Source = new Uri(uriString);
                 }
-                else
+                else if (Element.Source is FileVideoSource)
                 {
-                    // TODO for file sources
+                    // Code requires Pictures Library in Package.appxmanifest Capabilities to be enabled
+                    string filename = (Element.Source as FileVideoSource).File;
+                    StorageFile storageFile = await StorageFile.GetFileFromPathAsync(filename);
+                    IRandomAccessStreamWithContentType stream = await storageFile.OpenReadAsync();
+                    Control.SetSource(stream, storageFile.ContentType);
+                }
+                else if (Element.Source is ResourceVideoSource)
+                {
+                    string path = "ms-appx:///" + (Element.Source as ResourceVideoSource).Path;
+                    Control.Source = new Uri(path);
                 }
             }
-
-            Control.Source = uri;
         }
 
         void SetAutoPlay()

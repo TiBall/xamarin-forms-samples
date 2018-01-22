@@ -22,9 +22,10 @@ namespace MediaHelpers.UWP
             FileOpenPicker openPicker = new FileOpenPicker
             {
                 ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.VideosLibrary
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary           // .VideosLibrary
             };
 
+            openPicker.FileTypeFilter.Add(".wmv");
             openPicker.FileTypeFilter.Add(".mp4");                  // TODO !!!
     //        openPicker.FileTypeFilter.Add(".jpeg");
    //         openPicker.FileTypeFilter.Add(".png");
@@ -37,7 +38,7 @@ namespace MediaHelpers.UWP
                 return null;
             }
 
-            return storageFile.Name;
+            return storageFile.Path;
                                                     // IRandomAccessStreamWithContentType raStream = await storageFile.OpenReadAsync();
                                           //  raStream.AsStreamForRead();
         }

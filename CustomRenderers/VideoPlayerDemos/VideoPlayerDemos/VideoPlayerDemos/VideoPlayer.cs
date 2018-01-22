@@ -24,23 +24,23 @@ namespace MediaHelpers
         public static readonly BindableProperty SourceProperty =
             BindableProperty.Create("Source", typeof(VideoSource), typeof(VideoPlayer), null);
 
-        public static readonly BindableProperty AutoPlayProperty =
-            BindableProperty.Create("AutoPlay", typeof(bool), typeof(VideoPlayer), true);
-
-        public static readonly BindableProperty AreTransportControlsEnabledProperty =
-            BindableProperty.Create("AreTransportControlsEnabled", typeof(bool), typeof(VideoPlayer), true);
-
         public VideoSource Source
         {
             set { SetValue(SourceProperty, value); }
             get { return (VideoSource)GetValue(SourceProperty); }
         }
 
+        public static readonly BindableProperty AutoPlayProperty =
+            BindableProperty.Create("AutoPlay", typeof(bool), typeof(VideoPlayer), true);
+
         public bool AutoPlay
         {
             set { SetValue(AutoPlayProperty, value); }
             get { return (bool)GetValue(AutoPlayProperty); }
         }
+
+        public static readonly BindableProperty AreTransportControlsEnabledProperty =
+            BindableProperty.Create("AreTransportControlsEnabled", typeof(bool), typeof(VideoPlayer), true);
 
         public bool AreTransportControlsEnabled
         {
