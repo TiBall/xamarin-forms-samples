@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel;
+using System.IO;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System.ComponentModel;
 using Android.Media;
+using Android.Widget;
 
 [assembly: ExportRenderer(typeof(MediaHelpers.VideoPlayer),
                           typeof(MediaHelpers.Droid.VideoPlayerRenderer))]
@@ -139,7 +133,8 @@ namespace MediaHelpers.Droid
                 {
                     string package = Context.PackageName;
                     string path = (Element.Source as ResourceVideoSource).Path;
-                    string uri = "android.resource://" + package + "/raw/" + path;
+                    string filename = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
+                    string uri = "android.resource://" + package + "/raw/" + filename;
                     Control.SetVideoURI(Android.Net.Uri.Parse(uri));
                     hasSetSource = true;
                 }

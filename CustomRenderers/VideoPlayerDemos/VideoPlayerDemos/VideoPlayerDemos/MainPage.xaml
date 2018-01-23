@@ -29,23 +29,16 @@
             </media:VideoPlayer.Source>-->
 
             <media:VideoPlayer.Source>
-                <media:ResourceVideoSource Path="Videos/VideoInFolder.mp4" />
-                <!--<media:ResourceVideoSource Path="iosvideo.mp4" />-->
+                <media:ResourceVideoSource>
+                    <media:ResourceVideoSource.Path>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Videos/VideoInFolder.mp4" />
+                            <On Platform="Android" Value="AndroidVideo.mp4" />
+                            <On Platform="Windows" Value="Videos/WinVideo.mp4" />
+                        </OnPlatform>
+                    </media:ResourceVideoSource.Path>
+                </media:ResourceVideoSource>
             </media:VideoPlayer.Source>
-
-
-
-            <!--<media:VideoPlayer.Source>
-                <media:ResourceVideoSource Path="androidvideo" />
-            </media:VideoPlayer.Source>-->
-
-
-            <!--<media:VideoPlayer.Source>
-                <media:ResourceVideoSource Path="Videos/WinVideo.mp4" />
-            </media:VideoPlayer.Source>-->
-
-
-
         </media:VideoPlayer>
 
         <StackLayout Grid.Row="1"
@@ -82,6 +75,8 @@
                                   Path=Duration.TotalSeconds}"
                 Value="{Binding Source={x:Reference videoPlayer},
                                 Path=Position.TotalSeconds}" />
+        
+        <!-- On Android, TotalSeconds property isn't found for Value, but Slider still works -->
     </Grid>
 
    
