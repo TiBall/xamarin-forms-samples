@@ -1,4 +1,5 @@
 ﻿using System;
+using MasterDetailPageNavigation.XAML;
 using Xamarin.Forms;
 
 namespace MasterDetailPageNavigation
@@ -27,5 +28,11 @@ namespace MasterDetailPageNavigation
                 IsPresented = false;
             }
         }
+
+	    protected override void OnAppearing()
+	    {
+		    base.OnAppearing();
+		    Navigation.PushModalAsync(new SimpleModalPage());
+	    }
     }
 }

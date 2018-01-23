@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using MasterDetailPageNavigation.XAML;
+using Xamarin.Forms;
 
 namespace MasterDetailPageNavigation
 {
@@ -7,6 +9,16 @@ namespace MasterDetailPageNavigation
 		public TodoListPage ()
 		{
 			InitializeComponent ();
+		}
+
+		private void Button_OnClicked(object sender, EventArgs e)
+		{
+			Navigation.PushModalAsync(new SimpleModalPage());
+		}
+
+		private void Button2_OnClicked(object sender, EventArgs e)
+		{
+			Navigation.PushAsync(new SimpleHierarchicalPage());
 		}
 	}
 }

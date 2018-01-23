@@ -5,7 +5,9 @@
 			 Title="TodoList Page">
 	<ContentPage.Content>
 		<StackLayout>
-			<Label Text="Todo list data goes here" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+			<Button Text="Push Modal Page" Clicked="Button_OnClicked" ></Button>
+			<Button Text="Push Hierarchical Page" Clicked="Button2_OnClicked" ></Button>
+			<Label Text="Todo list data goes here"  />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

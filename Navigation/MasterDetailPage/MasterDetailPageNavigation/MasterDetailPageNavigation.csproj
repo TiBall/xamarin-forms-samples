@@ -53,6 +53,12 @@
     <Compile Include="XAML\ReminderPage.xaml.cs">
       <DependentUpon>ReminderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="XAML\SimpleHierarchicalPage.xaml.cs">
+      <DependentUpon>SimpleHierarchicalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="XAML\SimpleModalPage.xaml.cs">
+      <DependentUpon>SimpleModalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XAML\TodoListPage.xaml.cs">
       <DependentUpon>TodoListPage.xaml</DependentUpon>
     </Compile>
@@ -93,8 +99,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="XAML\" />
-    <Folder Include="CS\" />
+    <EmbeddedResource Include="XAML\SimpleHierarchicalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="XAML\SimpleModalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Forms.2.5.0.91635\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.5.0.91635\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
